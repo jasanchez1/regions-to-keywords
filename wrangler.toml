@@ -1,0 +1,24 @@
+name = "geo-code-generator"
+compatibility_date = "2024-06-12"
+pages_build_output_dir = "./"
+
+[env.production]
+compatibility_date = "2024-06-12"
+
+[env.preview]
+compatibility_date = "2024-06-12"
+
+# Optional: Custom domain configuration
+# [env.production]
+# route = { pattern = "yourdomain.com", custom_domain = true }
+
+# Static assets configuration
+[[rules]]
+type = "Text"
+globs = ["**/*.html", "**/*.css", "**/*.js"]
+headers = { "Cache-Control" = "public, max-age=31536000, immutable" }
+
+[[rules]]
+type = "Data"
+globs = ["**/*.csv", "**/*.json"]
+headers = { "Cache-Control" = "public, max-age=86400" }
