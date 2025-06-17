@@ -21,7 +21,7 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 2rem auto;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -50,19 +50,59 @@
             font-size: 1.1rem;
         }
         
-        .selection-container {
+        .filter-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+            color: #4a5568;
+        }
+        
+        select {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .items-container {
             background: #f8fafc;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             padding: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
-        .available-items {
+        .items-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 0.5rem;
-            max-height: 200px;
+            max-height: 300px;
             overflow-y: auto;
             margin-bottom: 1rem;
         }
@@ -71,11 +111,13 @@
             background: white;
             border: 2px solid #e2e8f0;
             border-radius: 8px;
-            padding: 0.5rem 0.75rem;
+            padding: 0.75rem;
             cursor: pointer;
             transition: all 0.2s;
             font-size: 0.9rem;
             text-align: left;
+            user-select: none;
+            position: relative;
         }
         
         .item-button:hover {
@@ -84,37 +126,81 @@
             box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
         }
         
-        .item-button.selected {
-            background: #667eea;
-            border-color: #667eea;
+        .item-button.included {
+            background: #10b981;
+            border-color: #10b981;
             color: white;
+        }
+        
+        .item-button.excluded {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+        
+        .item-button.excluded::before {
+            content: '✗ ';
+            font-weight: bold;
+        }
+        
+        .item-button.included::before {
+            content: '✓ ';
+            font-weight: bold;
+        }
+        
+        .item-code {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-top: 0.25rem;
         }
         
         .selected-items {
-            background: #ebf8ff;
-            border: 1px solid #bee3f8;
+            background: white;
+            border: 1px solid #d1d5db;
             border-radius: 8px;
-            padding: 0.75rem;
-            min-height: 50px;
+            padding: 1rem;
+            min-height: 80px;
         }
         
-        .selected-item {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 0.25rem 0.5rem;
-            margin: 0.25rem;
+        .section-title {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .selection-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .summary-item {
+            background: #e5e7eb;
+            padding: 0.25rem 0.75rem;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: background 0.2s;
         }
         
-        .selected-item:hover {
-            background: #5a67d8;
+        .summary-item.included {
+            background: #10b981;
+            color: white;
         }
         
-        .selected-item::after {
+        .summary-item.excluded {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .summary-item:hover {
+            opacity: 0.8;
+        }
+        
+        .summary-item::after {
             content: ' ×';
             margin-left: 0.25rem;
             font-weight: bold;
@@ -123,6 +209,15 @@
         .empty-selection {
             color: #9ca3af;
             font-style: italic;
+        }
+        
+        .instructions {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #6b7280;
         }
         
         button {
@@ -143,10 +238,6 @@
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
         
-        button:active {
-            transform: translateY(0);
-        }
-
         button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
@@ -168,12 +259,6 @@
             font-size: 0.9rem;
             background: #f8fafc;
             resize: vertical;
-            transition: border-color 0.2s;
-        }
-        
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
         }
         
         .copy-button {
@@ -195,21 +280,6 @@
             color: #2b6cb0;
         }
         
-        .error {
-            background: #fed7d7;
-            border: 1px solid #feb2b2;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            color: #c53030;
-        }
-        
-        .loading {
-            text-align: center;
-            color: #666;
-            font-style: italic;
-        }
-
         .stats {
             background: #f0fff4;
             border: 1px solid #9ae6b4;
@@ -220,15 +290,13 @@
             font-size: 0.9rem;
         }
         
-        @media (max-width: 768px) {
-            .container {
-                margin: 1rem auto;
-                padding: 1.5rem;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-            }
+        .error {
+            background: #fed7d7;
+            border: 1px solid #feb2b2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            color: #c53030;
         }
     </style>
 </head>
@@ -242,88 +310,98 @@
             </div>
             
             <div class="info">
-                <strong>Instructions:</strong> Click on regions and/or sub-regions below to add them to your selection. The app will generate deduplicated geo codes in the format "geo=US" for all countries in the selected areas.
+                <strong>Instructions:</strong> Select what to show using the dropdown, then click items to include them. Right-click on sub-regions or countries to exclude them. Regions can only be included.
             </div>
             
             <div class="form-group">
-                <label>📍 Select Regions:</label>
-                <div class="selection-container">
-                    <div class="available-items">
-                        <div 
-                            v-for="region in availableRegions" 
-                            :key="region"
-                            class="item-button"
-                            :class="{ selected: selectedRegions.includes(region) }"
-                            @click="toggleRegion(region)"
-                        >
-                            {{ region }}
-                        </div>
-                    </div>
-                    <div class="selected-items">
-                        <strong>Selected Regions:</strong>
-                        <div v-if="selectedRegions.length === 0" class="empty-selection">
-                            No regions selected
-                        </div>
-                        <span 
-                            v-for="region in selectedRegions" 
-                            :key="region"
-                            class="selected-item"
-                            @click="toggleRegion(region)"
-                        >
-                            {{ region }}
-                        </span>
-                    </div>
+                <label>📋 Select Items:</label>
+                
+                <div class="filter-container">
+                    <span class="filter-label">Show:</span>
+                    <select v-model="selectedFilter">
+                        <option value="sub-regions">Sub-regions</option>
+                        <option value="regions">Regions</option>
+                        <option value="countries">Countries</option>
+                    </select>
+                    <input 
+                        type="text" 
+                        v-model="searchQuery" 
+                        placeholder="Search..." 
+                        class="search-input"
+                    >
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>🌏 Select Sub-Regions:</label>
-                <div class="selection-container">
-                    <div class="available-items">
+                
+                <div class="items-container">
+                    <div class="instructions">
+                        <strong>Left-click</strong> to include • <strong>Right-click</strong> to exclude (sub-regions & countries only)
+                    </div>
+                    
+                    <div class="items-grid">
                         <div 
-                            v-for="subRegion in availableSubRegions" 
-                            :key="subRegion"
+                            v-for="item in filteredItems" 
+                            :key="item.id"
                             class="item-button"
-                            :class="{ selected: selectedSubRegions.includes(subRegion) }"
-                            @click="toggleSubRegion(subRegion)"
+                            :class="{ 
+                                'included': isIncluded(item),
+                                'excluded': isExcluded(item)
+                            }"
+                            @click="includeItem(item)"
+                            @contextmenu.prevent="excludeItem(item)"
                         >
-                            {{ subRegion }}
+                            <div>{{ item.name }}</div>
+                            <div v-if="item.code" class="item-code">{{ item.code }}</div>
                         </div>
                     </div>
+                    
                     <div class="selected-items">
-                        <strong>Selected Sub-Regions:</strong>
-                        <div v-if="selectedSubRegions.length === 0" class="empty-selection">
-                            No sub-regions selected
+                        <div class="section-title">
+                            <span>📌 Selected Items</span>
+                            <span v-if="hasSelections">({{ totalSelections }})</span>
                         </div>
-                        <span 
-                            v-for="subRegion in selectedSubRegions" 
-                            :key="subRegion"
-                            class="selected-item"
-                            @click="toggleSubRegion(subRegion)"
-                        >
-                            {{ subRegion }}
-                        </span>
+                        
+                        <div v-if="!hasSelections" class="empty-selection">
+                            No items selected
+                        </div>
+                        
+                        <div v-else class="selection-summary">
+                            <span 
+                                v-for="item in includedItems" 
+                                :key="'inc-' + item.id"
+                                class="summary-item included"
+                                @click="removeItem(item)"
+                            >
+                                {{ item.name }}
+                            </span>
+                            <span 
+                                v-for="item in excludedItems" 
+                                :key="'exc-' + item.id"
+                                class="summary-item excluded"
+                                @click="removeItem(item)"
+                            >
+                                ✗ {{ item.name }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <button 
                 @click="generateGeoCodes" 
-                :disabled="totalSelections === 0 || loading"
+                :disabled="!hasSelections || loading"
             >
                 Generate Geo Codes
             </button>
             
             <button 
-                @click="clearSelection"
-                :disabled="totalSelections === 0"
+                @click="clearAll"
+                :disabled="!hasSelections"
             >
-                Clear Selection
+                Clear All
             </button>
             
-            <div v-if="stats" class="stats">
-                Selected {{ selectedRegions.length }} region(s) and {{ selectedSubRegions.length }} sub-region(s) • 
-                Generated {{ generatedCodes.length }} deduplicated geo codes
+            <div v-if="hasSelections" class="stats">
+                {{ includedItems.length }} included, {{ excludedItems.length }} excluded • 
+                Generated {{ generatedCodes.length }} geo codes
             </div>
             
             <div class="output-section">
@@ -346,7 +424,6 @@
     </div>
 
     <script>
-        // Check if Vue is loaded
         if (typeof Vue === 'undefined') {
             document.body.innerHTML = '<div style="text-align: center; margin: 2rem; color: red;">Failed to load Vue.js. Please check your internet connection.</div>';
         } else {
@@ -358,8 +435,10 @@
                         countries: [],
                         availableRegions: [],
                         availableSubRegions: [],
-                        selectedRegions: [],
-                        selectedSubRegions: [],
+                        selectedFilter: 'sub-regions',
+                        searchQuery: '',
+                        includedItems: [],
+                        excludedItems: [],
                         generatedCodes: [],
                         loading: true,
                         error: null
@@ -369,11 +448,56 @@
                     output() {
                         return this.generatedCodes.join('\n');
                     },
-                    stats() {
-                        return this.selectedRegions.length > 0 || this.selectedSubRegions.length > 0;
+                    hasSelections() {
+                        return this.includedItems.length > 0 || this.excludedItems.length > 0;
                     },
                     totalSelections() {
-                        return this.selectedRegions.length + this.selectedSubRegions.length;
+                        return this.includedItems.length + this.excludedItems.length;
+                    },
+                    allItems() {
+                        const items = [];
+                        
+                        if (this.selectedFilter === 'regions') {
+                            this.availableRegions.forEach(region => {
+                                items.push({
+                                    id: `region-${region}`,
+                                    name: region,
+                                    type: 'Region',
+                                    code: null
+                                });
+                            });
+                        } else if (this.selectedFilter === 'sub-regions') {
+                            this.availableSubRegions.forEach(subRegion => {
+                                items.push({
+                                    id: `subregion-${subRegion}`,
+                                    name: subRegion,
+                                    type: 'Sub-Region',
+                                    code: null
+                                });
+                            });
+                        } else if (this.selectedFilter === 'countries') {
+                            this.countries.forEach(country => {
+                                items.push({
+                                    id: `country-${country['alpha-2']}`,
+                                    name: country.name,
+                                    type: 'Country',
+                                    code: country['alpha-2']
+                                });
+                            });
+                        }
+                        
+                        return items.sort((a, b) => a.name.localeCompare(b.name));
+                    },
+                    filteredItems() {
+                        if (!this.searchQuery.trim()) {
+                            return this.allItems;
+                        }
+                        
+                        const search = this.searchQuery.toLowerCase();
+                        return this.allItems.filter(item => 
+                            item.name.toLowerCase().includes(search) ||
+                            (item.code && item.code.toLowerCase().includes(search))
+                        );
                     }
                 },
                 async mounted() {
@@ -385,7 +509,6 @@
                             this.loading = true;
                             this.error = null;
                             
-                            // Try to load from uploaded file first
                             let csvContent;
                             try {
                                 if (typeof window.fs !== 'undefined') {
@@ -394,7 +517,6 @@
                                     throw new Error('File system not available');
                                 }
                             } catch (fileError) {
-                                // If file not found, fetch from public folder
                                 const response = await fetch('./keystonecountryregionstandards.csv');
                                 if (!response.ok) {
                                     throw new Error(`Failed to fetch CSV file: ${response.status}`);
@@ -408,7 +530,7 @@
                             
                         } catch (error) {
                             console.error('Error loading data:', error);
-                            this.error = 'Failed to load country data. Please ensure the keystonecountryregionstandards.csv file is available in the same directory.';
+                            this.error = 'Failed to load country data. Please ensure the keystonecountryregionstandards.csv file is available.';
                         } finally {
                             this.loading = false;
                         }
@@ -427,7 +549,7 @@
                             });
                             
                             return country;
-                        }).filter(country => country.name && country['country-code'] && country.region);
+                        }).filter(country => country.name && country['alpha-2'] && country.region);
                     },
                     
                     parseCSVLine(line) {
@@ -444,7 +566,7 @@
                             } else if (char === '"' && inQuotes) {
                                 if (nextChar === '"') {
                                     current += '"';
-                                    i++; // Skip next quote
+                                    i++;
                                 } else {
                                     inQuotes = false;
                                 }
@@ -462,80 +584,117 @@
                     
                     extractRegions() {
                         const regions = new Set();
-                        
                         this.countries.forEach(country => {
                             if (country.region && country.region.trim()) {
                                 regions.add(country.region.trim());
                             }
                         });
-                        
                         return Array.from(regions).sort();
                     },
 
                     extractSubRegions() {
                         const subRegions = new Set();
-                        
                         this.countries.forEach(country => {
                             if (country['sub-region'] && country['sub-region'].trim()) {
                                 subRegions.add(country['sub-region'].trim());
                             }
                         });
-                        
                         return Array.from(subRegions).sort();
                     },
                     
+                    isIncluded(item) {
+                        return this.includedItems.some(i => i.id === item.id);
+                    },
+                    
+                    isExcluded(item) {
+                        return this.excludedItems.some(i => i.id === item.id);
+                    },
+                    
+                    includeItem(item) {
+                        if (this.isIncluded(item)) {
+                            // Remove if already included
+                            this.includedItems = this.includedItems.filter(i => i.id !== item.id);
+                        } else {
+                            // Add to included
+                            this.includedItems.push(item);
+                            // Remove from excluded if it was there
+                            this.excludedItems = this.excludedItems.filter(i => i.id !== item.id);
+                        }
+                    },
+                    
+                    excludeItem(item) {
+                        // Only allow exclusion for sub-regions and countries
+                        if (item.type === 'Region') return;
+                        
+                        if (this.isExcluded(item)) {
+                            // Remove if already excluded
+                            this.excludedItems = this.excludedItems.filter(i => i.id !== item.id);
+                        } else {
+                            // Add to excluded
+                            this.excludedItems.push(item);
+                            // Remove from included if it was there
+                            this.includedItems = this.includedItems.filter(i => i.id !== item.id);
+                        }
+                    },
+                    
+                    removeItem(item) {
+                        this.includedItems = this.includedItems.filter(i => i.id !== item.id);
+                        this.excludedItems = this.excludedItems.filter(i => i.id !== item.id);
+                    },
+                    
                     generateGeoCodes() {
-                        if (this.selectedRegions.length === 0 && this.selectedSubRegions.length === 0) return;
+                        const codes = new Set();
                         
-                        const codeSet = new Set(); // Use Set for automatic deduplication
+                        // Process included items
+                        this.includedItems.forEach(item => {
+                            if (item.type === 'Region') {
+                                this.countries.forEach(country => {
+                                    if (country.region === item.name) {
+                                        codes.add(`geo=${country['alpha-2']}`);
+                                    }
+                                });
+                            } else if (item.type === 'Sub-Region') {
+                                this.countries.forEach(country => {
+                                    if (country['sub-region'] === item.name) {
+                                        codes.add(`geo=${country['alpha-2']}`);
+                                    }
+                                });
+                            } else if (item.type === 'Country') {
+                                codes.add(`geo=${item.code}`);
+                            }
+                        });
                         
-                        this.countries.forEach(country => {
-                            let shouldInclude = false;
-                            
-                            // Check if country matches selected regions
-                            if (this.selectedRegions.includes(country.region)) {
-                                shouldInclude = true;
-                            }
-                            
-                            // Check if country matches selected sub-regions
-                            if (this.selectedSubRegions.includes(country['sub-region'])) {
-                                shouldInclude = true;
-                            }
-                            
-                            if (shouldInclude) {
-                                const countryCode = country['alpha-2']; // Use 2-letter code instead
-                                if (countryCode) {
-                                    codeSet.add(`country=${countryCode}`);
+                        // Process excluded items
+                        this.excludedItems.forEach(item => {
+                            if (item.type === 'Sub-Region') {
+                                this.countries.forEach(country => {
+                                    if (country['sub-region'] === item.name) {
+                                        const geoCode = `geo=${country['alpha-2']}`;
+                                        if (codes.has(geoCode)) {
+                                            codes.delete(geoCode);
+                                        } else if (this.includedItems.length === 0) {
+                                            codes.add(`!country=${country['alpha-2']}`);
+                                        }
+                                    }
+                                });
+                            } else if (item.type === 'Country') {
+                                const geoCode = `geo=${item.code}`;
+                                if (codes.has(geoCode)) {
+                                    codes.delete(geoCode);
+                                } else if (this.includedItems.length === 0) {
+                                    codes.add(`!country=${item.code}`);
                                 }
                             }
                         });
                         
-                        // Convert Set back to sorted array
-                        this.generatedCodes = Array.from(codeSet).sort();
-                    },
-
-                    toggleRegion(region) {
-                        const index = this.selectedRegions.indexOf(region);
-                        if (index > -1) {
-                            this.selectedRegions.splice(index, 1);
-                        } else {
-                            this.selectedRegions.push(region);
-                        }
-                    },
-
-                    toggleSubRegion(subRegion) {
-                        const index = this.selectedSubRegions.indexOf(subRegion);
-                        if (index > -1) {
-                            this.selectedSubRegions.splice(index, 1);
-                        } else {
-                            this.selectedSubRegions.push(subRegion);
-                        }
+                        this.generatedCodes = Array.from(codes).sort();
                     },
                     
-                    clearSelection() {
-                        this.selectedRegions = [];
-                        this.selectedSubRegions = [];
+                    clearAll() {
+                        this.includedItems = [];
+                        this.excludedItems = [];
                         this.generatedCodes = [];
+                        this.searchQuery = '';
                     },
                     
                     async copyToClipboard() {
@@ -544,7 +703,6 @@
                         try {
                             await navigator.clipboard.writeText(this.output);
                             
-                            // Visual feedback
                             const button = event.target;
                             const originalText = button.textContent;
                             button.textContent = '✅ Copied!';
@@ -557,11 +715,8 @@
                             
                         } catch (error) {
                             console.error('Failed to copy to clipboard:', error);
-                            
-                            // Fallback: select the text
                             const textarea = document.getElementById('output');
                             textarea.select();
-                            textarea.setSelectionRange(0, 99999);
                         }
                     }
                 }
