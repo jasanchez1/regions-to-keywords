@@ -14,24 +14,25 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             min-height: 100vh;
-            color: #333;
+            color: #e2e8f0;
             padding: 1rem;
         }
         
         .container {
             max-width: 900px;
             margin: 2rem auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(30, 41, 59, 0.3);
         }
         
         h1 {
-            color: #4a5568;
+            color: #f1f5f9;
             margin-bottom: 2rem;
             text-align: center;
             font-size: 2rem;
@@ -46,7 +47,7 @@
             display: block;
             margin-bottom: 0.75rem;
             font-weight: 600;
-            color: #2d3748;
+            color: #f1f5f9;
             font-size: 1.1rem;
         }
         
@@ -59,82 +60,91 @@
         
         .filter-label {
             font-weight: 500;
-            color: #4a5568;
+            color: #cbd5e1;
         }
         
         select {
             padding: 0.5rem 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
+            border: 1px solid #475569;
+            border-radius: 6px;
             font-size: 0.9rem;
-            background: white;
+            background: #334155;
+            color: #e2e8f0;
             cursor: pointer;
             transition: border-color 0.2s;
         }
         
         select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #f97316;
         }
         
         .search-input {
             flex: 1;
             padding: 0.5rem 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
+            border: 1px solid #475569;
+            border-radius: 6px;
             font-size: 0.9rem;
+            background: #334155;
+            color: #e2e8f0;
         }
         
         .search-input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #f97316;
+        }
+        
+        .search-input::placeholder {
+            color: #94a3b8;
         }
         
         .items-container {
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1rem;
+            background: rgba(51, 65, 85, 0.4);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
         
         .items-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 0.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 0.75rem;
             max-height: 300px;
             overflow-y: auto;
             margin-bottom: 1rem;
         }
         
         .item-button {
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 0.75rem;
+            background: rgba(71, 85, 105, 0.6);
+            border: 1px solid #64748b;
+            border-radius: 6px;
+            padding: 0.875rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s ease;
             font-size: 0.9rem;
             text-align: left;
             user-select: none;
             position: relative;
+            color: #e2e8f0;
         }
         
         .item-button:hover {
-            border-color: #667eea;
+            border-color: #f97316;
             transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+            background: rgba(71, 85, 105, 0.8);
         }
         
         .item-button.included {
-            background: #10b981;
-            border-color: #10b981;
+            background: #3b82f6;
+            border-color: #2563eb;
             color: white;
         }
         
         .item-button.excluded {
-            background: #ef4444;
-            border-color: #ef4444;
+            background: #6b7280;
+            border-color: #4b5563;
             color: white;
         }
         
@@ -155,8 +165,8 @@
         }
         
         .selected-items {
-            background: white;
-            border: 1px solid #d1d5db;
+            background: rgba(30, 58, 138, 0.6);
+            border: 1px solid #475569;
             border-radius: 8px;
             padding: 1rem;
             min-height: 80px;
@@ -164,7 +174,7 @@
         
         .section-title {
             font-weight: 600;
-            color: #374151;
+            color: #f1f5f9;
             margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
@@ -178,21 +188,22 @@
         }
         
         .summary-item {
-            background: #e5e7eb;
+            background: #475569;
             padding: 0.25rem 0.75rem;
             border-radius: 6px;
             font-size: 0.8rem;
             cursor: pointer;
             transition: background 0.2s;
+            color: #e2e8f0;
         }
         
         .summary-item.included {
-            background: #10b981;
+            background: #3b82f6;
             color: white;
         }
         
         .summary-item.excluded {
-            background: #ef4444;
+            background: #6b7280;
             color: white;
         }
         
@@ -207,21 +218,22 @@
         }
         
         .empty-selection {
-            color: #9ca3af;
+            color: #94a3b8;
             font-style: italic;
         }
         
         .instructions {
-            background: #f3f4f6;
+            background: rgba(30, 58, 138, 0.4);
             border-radius: 8px;
             padding: 0.75rem;
             margin-bottom: 1rem;
             font-size: 0.85rem;
-            color: #6b7280;
+            color: #cbd5e1;
+            border: 1px solid #475569;
         }
         
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             color: white;
             padding: 0.75rem 2rem;
             border: none;
@@ -235,7 +247,7 @@
         
         button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.4);
         }
         
         button:disabled {
@@ -246,57 +258,63 @@
         .output-section {
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 2px solid #e2e8f0;
+            border-top: 2px solid #475569;
         }
         
         textarea {
             width: 100%;
             min-height: 200px;
             padding: 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
+            border: 1px solid #475569;
+            border-radius: 6px;
             font-family: 'Monaco', 'Consolas', monospace;
             font-size: 0.9rem;
-            background: #f8fafc;
+            background: #334155;
+            color: #e2e8f0;
             resize: vertical;
         }
         
+        textarea:focus {
+            outline: none;
+            border-color: #f97316;
+        }
+        
         .copy-button {
-            background: #48bb78;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             margin-top: 0.5rem;
         }
         
         .copy-button:hover:not(:disabled) {
-            background: #38a169;
-            box-shadow: 0 10px 20px rgba(72, 187, 120, 0.3);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25);
         }
         
         .info {
-            background: #ebf8ff;
-            border: 1px solid #bee3f8;
+            background: rgba(30, 58, 138, 0.4);
+            border: 1px solid #475569;
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1.5rem;
-            color: #2b6cb0;
+            color: #cbd5e1;
         }
         
         .stats {
-            background: #f0fff4;
-            border: 1px solid #9ae6b4;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
             border-radius: 8px;
             padding: 1rem;
             margin-top: 1rem;
-            color: #276749;
+            color: #93c5fd;
             font-size: 0.9rem;
         }
         
         .error {
-            background: #fed7d7;
-            border: 1px solid #feb2b2;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1.5rem;
-            color: #c53030;
+            color: #fca5a5;
         }
     </style>
 </head>
@@ -319,7 +337,7 @@
                 <div class="filter-container">
                     <span class="filter-label">Show:</span>
                     <select v-model="selectedFilter">
-                        <option value="sub-regions">Sub-regions</option>
+                        <option value="sub-regions">Sub-Regions</option>
                         <option value="regions">Regions</option>
                         <option value="countries">Countries</option>
                     </select>
@@ -650,17 +668,17 @@
                             if (item.type === 'Region') {
                                 this.countries.forEach(country => {
                                     if (country.region === item.name) {
-                                        codes.add(`geo=${country['alpha-2']}`);
+                                        codes.add(`country=${country['alpha-2']}`);
                                     }
                                 });
                             } else if (item.type === 'Sub-Region') {
                                 this.countries.forEach(country => {
                                     if (country['sub-region'] === item.name) {
-                                        codes.add(`geo=${country['alpha-2']}`);
+                                        codes.add(`country=${country['alpha-2']}`);
                                     }
                                 });
                             } else if (item.type === 'Country') {
-                                codes.add(`geo=${item.code}`);
+                                codes.add(`country=${item.code}`);
                             }
                         });
                         
@@ -669,7 +687,7 @@
                             if (item.type === 'Sub-Region') {
                                 this.countries.forEach(country => {
                                     if (country['sub-region'] === item.name) {
-                                        const geoCode = `geo=${country['alpha-2']}`;
+                                        const geoCode = `country=${country['alpha-2']}`;
                                         if (codes.has(geoCode)) {
                                             codes.delete(geoCode);
                                         } else if (this.includedItems.length === 0) {
@@ -678,7 +696,7 @@
                                     }
                                 });
                             } else if (item.type === 'Country') {
-                                const geoCode = `geo=${item.code}`;
+                                const geoCode = `country=${item.code}`;
                                 if (codes.has(geoCode)) {
                                     codes.delete(geoCode);
                                 } else if (this.includedItems.length === 0) {
